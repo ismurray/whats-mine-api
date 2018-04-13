@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :update, :destroy]
+class ItemsController < ProtectedController
+  before_action :set_item, only: %i[show update destroy]
 
   # GET /items
   def index
-    @items = Item.all
+    @items = current_user.items.all
 
     render json: @items
   end
@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
 
   # POST /items
   def create
-    @item = Item.new(item_params)
+    @item = current_user.items.build(item_params)
 
     if @item.save
       render json: @item, status: :created
@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = Item.find(params[:id])
+      @item = current_user.items.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

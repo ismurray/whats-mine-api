@@ -1,7 +1,7 @@
 #!/bin/bash
-NAME='ewakdfjsgh'
-VALUE=99999
-USER_ID=1
+TOKEN="BAhJIiU5ODdkNjgwNDY1ZjYzZmYzMjEzMWM4NDA3ZjQ0OTU0ZAY6BkVG--988459a789b944394202874766347f832cc86560"
+NAME=user2shit
+VALUE=
 
 curl "http://localhost:4741/items" \
   --include \
@@ -11,8 +11,7 @@ curl "http://localhost:4741/items" \
   --data '{
     "item": {
       "name": "'"${NAME}"'",
-      "value": "'"${VALUE}"'",
-      "user_id": "'"${USER_ID}"'"
+      "value": "'"${VALUE}"'"
     }
   }'
 
