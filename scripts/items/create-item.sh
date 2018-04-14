@@ -1,7 +1,8 @@
 #!/bin/bash
-TOKEN="BAhJIiU5ODdkNjgwNDY1ZjYzZmYzMjEzMWM4NDA3ZjQ0OTU0ZAY6BkVG--988459a789b944394202874766347f832cc86560"
-NAME=user2shit
-VALUE=
+TOKEN="BAhJIiU1NzdiZDAxNTlkMDEzYWI2MmNlNDdjMDQ1ZDgyNzQxMAY6BkVG--990044853727e3856e7b2430417d7366b8a33d75"
+NAME=SecondItemInABox
+VALUE=999
+BOX_ID=2
 
 curl "http://localhost:4741/items" \
   --include \
@@ -11,7 +12,8 @@ curl "http://localhost:4741/items" \
   --data '{
     "item": {
       "name": "'"${NAME}"'",
-      "value": "'"${VALUE}"'"
+      "value": "'"${VALUE}"'",
+      "box_id": "'"${BOX_ID}"'"
     }
   }'
 
