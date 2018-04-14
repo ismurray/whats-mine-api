@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class BoxSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :items
   belongs_to :user
-  has_many :items
+
+  def items
+    object.items.pluck(:id)
+  end
 end

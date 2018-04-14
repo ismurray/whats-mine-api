@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :value
+  attributes :id, :name, :value, :box
   belongs_to :user
-  belongs_to :box
+
+  def box
+    object.box.id
+  end
 end
