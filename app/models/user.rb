@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   include Authentication
   has_many :examples
-  has_many :items
   has_many :users_boxes
   has_many :boxes, through: :users_boxes
+  has_many :items, through: :boxes
 end
