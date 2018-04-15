@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   # RESTful routes
+  resources :users_boxes, except: %i[new edit]
   resources :boxes, except: %i[new edit]
   resources :items, except: %i[new edit]
   resources :examples, except: %i[new edit]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180414151036) do
+ActiveRecord::Schema.define(version: 20180415135940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,8 +52,20 @@ ActiveRecord::Schema.define(version: 20180414151036) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  create_table "users_boxes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "box_id", null: false
+    t.boolean "write_access", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["box_id"], name: "index_users_boxes_on_box_id"
+    t.index ["user_id"], name: "index_users_boxes_on_user_id"
+  end
+
   add_foreign_key "boxes", "users"
   add_foreign_key "examples", "users"
   add_foreign_key "items", "boxes"
   add_foreign_key "items", "users"
+  add_foreign_key "users_boxes", "boxes"
+  add_foreign_key "users_boxes", "users"
 end
