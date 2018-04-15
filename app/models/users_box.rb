@@ -2,5 +2,5 @@
 
 class UsersBox < ApplicationRecord
   belongs_to :user
-  belongs_to :box
+  belongs_to :box, inverse_of: :users_boxes
 end
