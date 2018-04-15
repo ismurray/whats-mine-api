@@ -17,7 +17,9 @@ class ItemsController < ProtectedController
 
   # POST /items
   def create
-    @item = current_user.items.build(item_params)
+    @box = current_user.boxes.find(item_params[:box_id])
+    @item = @box.items.create(item_params)
+    @item[:user_id] = current_user[:id]
 
     if @item.save
       render json: @item, status: :created
