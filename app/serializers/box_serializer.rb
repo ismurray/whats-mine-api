@@ -2,7 +2,7 @@
 
 class BoxSerializer < ActiveModel::Serializer
   attributes :id, :name, :items
-  belongs_to :user
+  has_many :users, through: :users_boxes
 
   def items
     object.items.pluck(:id)

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class UsersBoxesController < ApplicationController
-  before_action :set_users_box, only: [:show, :update, :destroy]
+class UsersBoxesController < ProtectedController
+  before_action :set_users_box, only: %i[show update destroy]
 
   # GET /users_boxes
   def index
-    @users_boxes = UsersBox.all
+    @users_boxes = current_user.users_boxes.all
 
     render json: @users_boxes
   end
@@ -17,7 +17,7 @@ class UsersBoxesController < ApplicationController
 
   # POST /users_boxes
   def create
-    @users_box = UsersBox.new(users_box_params)
+    @users_box = current_user.users_boxes.build(users_box_params)
 
     if @users_box.save
       render json: @users_box, status: :created
@@ -43,7 +43,7 @@ class UsersBoxesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_users_box
-      @users_box = UsersBox.find(params[:id])
+      @users_box = current_user.users_boxes.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
