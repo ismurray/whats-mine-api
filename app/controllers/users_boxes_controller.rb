@@ -17,7 +17,11 @@ class UsersBoxesController < ProtectedController
 
   # POST /users_boxes
   def create
+    # first, build the UsersBox enter normally to ensure that the current user
+    # has write entry for the given Box, then change the user_id of @users_box
+    # to that of the user passed in the request
     @users_box = current_user.users_boxes.build(users_box_params)
+    @users_box[:user_id] = users_box_params[:user_id]
 
     if @users_box.save
       render json: @users_box, status: :created
