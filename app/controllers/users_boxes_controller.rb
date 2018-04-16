@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersBoxesController < ProtectedController
-  before_action :set_users_box, only: %i[show update destroy]
+  before_action :set_users_box, only: %i[update destroy]
 
   # GET /users_boxes
   def index
@@ -12,6 +12,9 @@ class UsersBoxesController < ProtectedController
 
   # GET /users_boxes/1
   def show
+    # no longer filters using set_users_box so that userA can see other userB's
+    # permissions on a Box userA owns
+    @users_box = UsersBox.find(params[:id])
     render json: @users_box
   end
 
