@@ -20,11 +20,15 @@ class UsersBoxesController < ProtectedController
 
   # POST /users_boxes
   def create
-    # first, build the UsersBox entry normally to ensure that the current user
-    # has write access for the given Box, then change the user_id of @users_box
-    # to that of the user passed in the request
-    @users_box = current_user.users_boxes.build(users_box_params)
-    @users_box[:user_id] = users_box_params[:user_id]
+    # if current_user has write permissions on the current box
+    @current_box = Box.find(users_box_params[:box_id])
+    if current_user_has_write_access?(@current_box)
+      # then, build the UsersBox entry normally to ensure that the current user
+      # has write access for the given Box, then change the user_id of
+      # @users_box to that of the user passed in the request
+      @users_box = current_user.users_boxes.build(users_box_params)
+      @users_box[:user_id] = users_box_params[:user_id]
+    end
 
     if @users_box.save
       render json: @users_box, status: :created
@@ -43,7 +47,14 @@ class UsersBoxesController < ProtectedController
   end
 
   # DELETE /users_boxes/1
+  # if the deleting user has write access on the Box, they can delete anyone's
+  # permisssions. Otherwise, they can only delete their own.
   def destroy
+    @users_box = if set_users_box
+                   UsersBox.find(params[:id])
+                 else
+                   current_user.users_boxes.find(params[:id])
+                 end
     @users_box.destroy
   end
 
@@ -51,22 +62,24 @@ class UsersBoxesController < ProtectedController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_users_box
-    return false unless current_user_has_write_access?
+    # finds the box entry of the permission User is trying to modify
+    @current_box = UsersBox.find(params[:id]).box
+    return false unless current_user_has_write_access?(@current_box)
     @users_box = UsersBox.find(params[:id])
   end
 
   # Returns true if the current user has write access in the given Box
-  def current_user_has_write_access?
-    @current_box = UsersBox.find(params[:id]).box
-    @current_user_permission = @current_box.users_boxes
-                                           .where(user_id: current_user[:id])
-                                           .first
+  def current_user_has_write_access?(current_box)
+    # finds the User's permission entry for the current box
+    @current_user_permission = current_box.users_boxes
+                                          .where(user_id: current_user[:id])
+                                          .first
+    # returns the User's write access in the current box (T/F)
     @current_user_permission[:write_access]
   end
 
   # Only allow a trusted parameter "white list" through.
   def users_box_params
-    p 'original params are ', params
     params.require(:users_box).permit(:user_id, :box_id, :write_access)
   end
 end
