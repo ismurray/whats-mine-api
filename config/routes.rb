@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   post '/sign-in' => 'users#signin'
   delete '/sign-out' => 'users#signout'
   patch '/change-password' => 'users#changepw'
+  # twilio route
+  post 'twilio/voice' => 'twilio#voice'
+  post 'twilio/text' => 'twilio#text'
 end
