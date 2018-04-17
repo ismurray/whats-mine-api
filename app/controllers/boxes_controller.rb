@@ -37,7 +37,15 @@ class BoxesController < ProtectedController
 
   # DELETE /boxes/1
   def destroy
-    @box.destroy
+    # find the users_box entry for the current Box and the current user
+    @users_box = @box.users_boxes.where(user_id: current_user.id).first
+    # check whether the user has write access, if yes, destroy the box, if no
+    # delete their read access to the Box, so it is removed from their list
+    if @users_box[:write_access]
+      @box.destroy
+    else
+      @users_box.destroy
+    end
   end
 
   private
