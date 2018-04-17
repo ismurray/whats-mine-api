@@ -1,6 +1,7 @@
 #!/bin/bash
-EMAIL=E@E
-PASSWORD=E
+EMAIL=murray@murray
+PASSWORD=murray
+PHONE="18134173803"
 
 curl "http://localhost:4741/sign-up" \
   --include \
@@ -10,7 +11,8 @@ curl "http://localhost:4741/sign-up" \
     "credentials": {
       "email": "'"${EMAIL}"'",
       "password": "'"${PASSWORD}"'",
-      "password_confirmation": "'"${PASSWORD}"'"
+      "password_confirmation": "'"${PASSWORD}"'",
+      "phone": "'"${PHONE}"'"
     }
   }'
 
