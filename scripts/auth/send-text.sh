@@ -1,5 +1,5 @@
 #!/bin/bash
-TO="+18134173803"
+TO="444-444-4444"
 BODY="Oh hello there!"
 
 curl "http://localhost:4741/twilio/text" \
