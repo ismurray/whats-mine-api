@@ -23,11 +23,12 @@ class UsersBoxesController < ProtectedController
     # if current_user has write permissions on the current box
     @current_box = Box.find(users_box_params[:box_id])
     if current_user_has_write_access?(@current_box)
-      # then, build the UsersBox entry normally to ensure that the current user
-      # has write access for the given Box, then change the user_id of
-      # @users_box to that of the user passed in the request
-      @users_box = current_user.users_boxes.build(users_box_params)
-      @users_box[:user_id] = users_box_params[:user_id]
+      # find the target user by email and create the UsersBox
+      @users_box = UsersBox.create(
+        box_id: users_box_params[:box_id],
+        write_access: users_box_params[:write_access],
+        user_id: User.find_by(email: users_box_params[:email]).id
+      )
     end
 
     if @users_box.save
@@ -80,6 +81,6 @@ class UsersBoxesController < ProtectedController
 
   # Only allow a trusted parameter "white list" through.
   def users_box_params
-    params.require(:users_box).permit(:user_id, :box_id, :write_access)
+    params.require(:users_box).permit(:email, :box_id, :write_access)
   end
 end
