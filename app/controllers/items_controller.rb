@@ -5,7 +5,11 @@ class ItemsController < ProtectedController
 
   # GET /items
   def index
-    @items = current_user.items.all
+    @items = if params[:search]
+               current_user.items.search_for(params[:search])
+             else
+               current_user.items.all
+             end
 
     render json: @items
   end
@@ -43,13 +47,15 @@ class ItemsController < ProtectedController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_item
-      @item = current_user.items.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def item_params
-      params.require(:item).permit(:name, :value, :user_id, :box_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_item
+    @item = current_user.items.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def item_params
+    params.require(:item).permit(:name, :value, :user_id, :box_id,
+                                 :search)
+  end
 end
