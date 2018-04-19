@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'twilio-ruby'
-require 'dotenv-rails'
+# require 'dotenv-rails'
 
 class TwilioController < ProtectedController
   def text
