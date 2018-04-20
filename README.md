@@ -1,5 +1,8 @@
-# WhatsMine: A shared inventory Tracker
-[UNDER CONSTRUCTION]
+# WhatsMine: A shared inventory tracker
+This is a back-end API for the WhatsMine client, which is a site where users can keep track of the things they care about, organized into shareable boxes. Users
+can add and remove each other from boxes, with variable levels of resource
+control (read-only, admin). Users can also send SMS reminder messages to each
+other about items in their shared boxes.
 
 - Deployed API: https://whats-mine-api.herokuapp.com/
 
@@ -7,45 +10,63 @@
 - Live Site: https://ismurray.github.io/whats-mine-client/
 - GitHub Repo: https://github.com/ismurray/whats-mine-client
 
-## MVP ERD:
+## API End Points
+
+| Verb   | URI Pattern                 | Controller#Action         |
+|--------|-----------------------------|---------------------------|
+| POST   | `/sign-up`                  | `users#signup`            |
+| POST   | `/sign-in`                  | `users#signin`            |
+| DELETE | `/sign-out`                 | `users#signout`           |
+| PATCH  | `/change-password`          | `users#changepw`          |
+| PATCH  | `/users/:id`                | `users#update`            |
+| POST   | `/twilio/text`              | `twilio#text`             |
+| GET    | `/boxes`                    | `boxes#index`             |
+| POST   | `/boxes`                    | `boxes#create`            |
+| GET    | `/boxes/:id`                | `boxes#show`              |
+| PATCH  | `/boxes/:id`                | `boxes#update`            |
+| DELETE | `/boxes/:id`                | `boxes#destroy`           |
+| GET    | `/items`                    | `items#index`             |
+| POST   | `/items`                    | `items#create`            |
+| GET    | `/items/:id`                | `items#show`              |
+| PATCH  | `/items/:id`                | `items#update`            |
+| DELETE | `/items/:id`                | `items#destroy`           |
+| GET    | `/users_boxes`              | `users_boxes#index`       |
+| POST   | `/users_boxes`              | `users_boxes#create`      |
+| GET    | `/users_boxes/:id`          | `users_boxes#show`        |
+| PATCH  | `/users_boxes/:id`          | `users_boxes#update`      |
+| DELETE | `/users_boxes/:id`          | `users_boxes#destroy`     |
+
+
+All data returned from API actions is formatted as JSON.
+
+### Current ERD:
+![alt text](https://i.imgur.com/UdPj2W2.jpg "Current ERD")
+
+## Planning and Development:
+
+## Minimum Viable Product ERD:
 ![alt text](https://i.imgur.com/cYaV3cy.jpg "MVP ERD")
-
-## MVP Wireframe:
-![alt text](https://i.imgur.com/1kPlv99.jpg "MVP Wireframe")
-
-## MVP User Stories
-As a user, I should be able to:
-- create an account
-- login to my account
-- change my password
-- sign out of my account
-- See all of my items
-- Create an item
-- Delete an item
-- Change an item
-
-
 
 ## Stretch Goal ERD:
 ![alt text](https://i.imgur.com/4KdVl37.jpg "Stretch ERD")
 
-## Stretch Goal Wireframe:
-![alt text](https://i.imgur.com/28Zms7x.jpg "Stretch Wireframe")
+## Technologies Used
+* Ruby on Rails
+* PostgresQL
+* Heroku
+* Git/Github
+* Atom
+* Twilio
 
-## Stretch User Stories
-As a user, I should be able to:
-- create an account
-- login to my account
-- change my password
-- sign out of my account
-- See all of my folders
-- Create a folder
-- Delete a folder
-- Change a folder's name
-- See the items in a folder
-- Add an item to a folder
-- Move an item to a different folder
-- Delete an item
-- Edit an item's name/value/etc
-- Add another user to a folder (shared folder ownership)
-- Add another user to an item (shared item ownership)
+## Installation
+1. Fork and clone this repository
+2. Install dependencies with `bundle install`
+
+## Future Iterations
+- Sorted categories for Boxes, so you can see which ones are private, which ones
+you share, and which ones you only have read-access to
+- Item descriptions
+- Item access control that is separate from Box access control
+
+## Disclaimer
+This API may be reset or altered at anytime.  The future of this API may not align with the current state and therefore the state your client application expects.  If you would like to maintain a version of this API in its current state for your future use, please fork and clone the repository and launch it on heroku.
