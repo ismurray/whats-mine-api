@@ -40,7 +40,8 @@ class UsersController < ProtectedController
     # else 400
     if current_user.authenticate(pw_creds[:old]) &&
        !(current_user.password = pw_creds[:new]).blank? &&
-       current_user.save
+       current_user.save &&
+       current_user.email != 'demo'
       head :no_content
     else
       head :bad_request

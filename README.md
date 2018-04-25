@@ -4,11 +4,13 @@ can add and remove each other from boxes, with variable levels of resource
 control (read-only, admin). Users can also send SMS reminder messages to each
 other about items in their shared boxes.
 
-- Deployed API: https://whats-mine-api.herokuapp.com/
+
+- [Deployed API](https://whats-mine-api.herokuapp.com/)
 
 ## WhatsMine Client
-- Live Site: https://ismurray.github.io/whats-mine-client/
-- GitHub Repo: https://github.com/ismurray/whats-mine-client
+- [Live Site](https://ismurray.github.io/whats-mine-client/)
+- [GitHub Repo](https://github.com/ismurray/whats-mine-client)
+
 
 ## API End Points
 
